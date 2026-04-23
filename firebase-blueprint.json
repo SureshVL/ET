@@ -1,0 +1,144 @@
+{
+  "entities": {
+    "users": {
+      "title": "User",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "role": { "type": "string", "enum": ["admin", "customer"] },
+        "name": { "type": "string" },
+        "address": { "type": "string" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "products": {
+      "title": "Product",
+      "description": "Kurta product details",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "price": { "type": "number" },
+        "sizes": { "type": "array", "items": { "type": "integer" } },
+        "stock": { "type": "object" },
+        "imageUrls": { "type": "array", "items": { "type": "string" } },
+        "variants": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string" },
+              "stock": { "type": "object" },
+              "imageUrls": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        }
+      },
+      "required": ["name", "price", "sizes", "stock"]
+    },
+    "orders": {
+      "title": "Order",
+      "description": "Customer order records",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "items": { "type": "array" },
+        "totalAmount": { "type": "number" },
+        "status": { "type": "string", "enum": ["pending", "shipped", "delivered"] },
+        "paymentStatus": { "type": "string", "enum": ["paid", "unpaid"] },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "shippingAddress": { "type": "string" }
+      },
+      "required": ["userId", "items", "totalAmount", "status", "paymentStatus", "createdAt"]
+    },
+    "reviews": {
+      "title": "Review",
+      "description": "Product reviews and ratings",
+      "type": "object",
+      "properties": {
+        "productId": { "type": "string" },
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "rating": { "type": "integer", "minimum": 1, "maximum": 5 },
+        "comment": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["productId", "userId", "userName", "rating", "comment", "createdAt"]
+    },
+    "wishlist": {
+      "title": "Wishlist",
+      "description": "User's saved products",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "productId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "productId", "createdAt"]
+    },
+    "addresses": {
+      "title": "Address",
+      "description": "User's shipping addresses",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "street": { "type": "string" },
+        "city": { "type": "string" },
+        "state": { "type": "string" },
+        "pincode": { "type": "string" },
+        "isDefault": { "type": "boolean" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "name", "phone", "street", "city", "state", "pincode", "createdAt"]
+    },
+    "ugc": {
+      "title": "User Generated Content",
+      "description": "Customer photos and testimonials",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "userName": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "caption": { "type": "string" },
+        "productId": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "approved", "rejected"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["imageUrl", "status", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "users",
+      "description": "User profile documents"
+    },
+    "/products/{productId}": {
+      "schema": "products",
+      "description": "Product catalog"
+    },
+    "/orders/{orderId}": {
+      "schema": "orders",
+      "description": "Order records"
+    },
+    "/reviews/{reviewId}": {
+      "schema": "reviews",
+      "description": "Product reviews"
+    },
+    "/wishlist/{wishlistId}": {
+      "schema": "wishlist",
+      "description": "User wishlist items"
+    },
+    "/addresses/{addressId}": {
+      "schema": "addresses",
+      "description": "User shipping addresses"
+    },
+    "/ugc/{ugcId}": {
+      "schema": "ugc",
+      "description": "User generated content gallery"
+    }
+  }
+}

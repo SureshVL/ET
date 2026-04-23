@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-brand-primary: #B71C1C; /* Vibrant Crimson */
+  --color-brand-secondary: #FDFBF7; /* Parchment */
+  --color-brand-accent: #E65100; /* Deep Orange */
+  --color-brand-footer: #1A1A1A; /* Rich Black */
+  --color-brand-gold: #D4AF37; /* Gold */
+  --color-brand-teal: #006064; /* Deep Teal */
+  --color-brand-rani: #C2185B; /* Rani Pink */
+  
+  --font-serif: "Cormorant Garamond", serif;
+  --font-sans: "Inter", sans-serif;
+  --font-display: "Outfit", sans-serif;
+}
+
+@layer base {
+  body {
+    @apply bg-brand-secondary text-gray-900 font-sans selection:bg-brand-primary selection:text-white;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif tracking-tight;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/70 backdrop-blur-md border border-white/20;
+  }
+
+  .glass-dark {
+    @apply bg-black/40 backdrop-blur-md border border-white/10;
+  }
+
+  .card {
+    @apply bg-white rounded-[40px] shadow-sm overflow-hidden border border-brand-primary/5 transition-all duration-500 hover:shadow-xl hover:-translate-y-2;
+  }
+
+  .btn-primary {
+    @apply bg-gradient-to-r from-brand-primary to-brand-rani text-white px-8 py-4 rounded-full font-display font-semibold tracking-wider text-sm transition-all duration-500 hover:shadow-2xl hover:shadow-brand-primary/40 hover:-translate-y-1 active:scale-95 disabled:opacity-50 flex items-center justify-center gap-2;
+  }
+
+  .btn-secondary {
+    @apply border-2 border-brand-primary text-brand-primary px-8 py-4 rounded-full font-display font-semibold tracking-wider text-sm transition-all duration-300 hover:bg-brand-primary hover:text-white hover:shadow-xl hover:shadow-brand-primary/10 active:scale-95 flex items-center justify-center gap-2;
+  }
+
+  .btn-gold {
+    @apply bg-gradient-to-r from-brand-gold to-brand-accent text-white px-8 py-4 rounded-full font-display font-semibold tracking-wider text-sm transition-all duration-300 hover:shadow-xl hover:shadow-brand-gold/30 hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-2;
+  }
+
+  .dynamic-bg {
+    background: linear-gradient(-45deg, #B71C1C, #C2185B, #E65100, #006064);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+  }
+
+  @keyframes gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-brand-primary via-brand-rani to-brand-accent;
+  }
+}
+
+.grain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}

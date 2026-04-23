@@ -1,0 +1,50 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "framework": null,
+  "rewrites": [
+    { "source": "/api/razorpay-key",             "destination": "/api/razorpay-key" },
+    { "source": "/api/create-razorpay-order",     "destination": "/api/create-razorpay-order" },
+    { "source": "/api/verify-razorpay-payment",   "destination": "/api/verify-razorpay-payment" },
+    { "source": "/api/shipping/calculate",        "destination": "/api/shipping/calculate" },
+    { "source": "/api/shipping/create",           "destination": "/api/shipping/create" },
+    { "source": "/api/shipping/track",            "destination": "/api/shipping/track" },
+    { "source": "/api/shipping/webhook",          "destination": "/api/shipping/webhook" },
+    { "source": "/api/shipping/cancel",           "destination": "/api/shipping/cancel" },
+    { "source": "/api/send-email",                "destination": "/api/send-email" },
+    { "source": "/api/products/feed",             "destination": "/api/products/feed" },
+    { "source": "/((?!api).*)",                   "destination": "/index.html" }
+  ],
+  "functions": {
+    "api/razorpay-key.ts":             { "runtime": "nodejs20.x", "maxDuration": 10 },
+    "api/create-razorpay-order.ts":    { "runtime": "nodejs20.x", "maxDuration": 15 },
+    "api/verify-razorpay-payment.ts":  { "runtime": "nodejs20.x", "maxDuration": 15 },
+    "api/send-email.ts":               { "runtime": "nodejs20.x", "maxDuration": 15 },
+    "api/products/feed.ts":            { "runtime": "nodejs20.x", "maxDuration": 10 },
+    "api/shipping/calculate.ts":       { "runtime": "nodejs20.x", "maxDuration": 10 },
+    "api/shipping/create.ts":          { "runtime": "nodejs20.x", "maxDuration": 30 },
+    "api/shipping/track.ts":           { "runtime": "nodejs20.x", "maxDuration": 15 },
+    "api/shipping/webhook.ts":         { "runtime": "nodejs20.x", "maxDuration": 15 },
+    "api/shipping/cancel.ts":          { "runtime": "nodejs20.x", "maxDuration": 15 }
+  },
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Credentials", "value": "true" },
+        { "key": "Access-Control-Allow-Origin",      "value": "*" },
+        { "key": "Access-Control-Allow-Methods",     "value": "GET,POST,OPTIONS" },
+        { "key": "Access-Control-Allow-Headers",     "value": "Content-Type,Authorization" }
+      ]
+    },
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options",        "value": "DENY" },
+        { "key": "X-XSS-Protection",       "value": "1; mode=block" },
+        { "key": "Referrer-Policy",        "value": "strict-origin-when-cross-origin" }
+      ]
+    }
+  ]
+}
